@@ -1,0 +1,41 @@
+<table id="list">
+  <tr>
+	<th>Active</th>
+	<th>Name</th>
+    <th>Calling</th>
+    <th>Called</th>
+    <th>Action</th>
+	<th>CLIR</th>
+	<th>Limit</th>
+	<th>ordr.</th>
+    <th colspan="1">Actions</th>
+  </tr>
+  
+<% for fs_extension in @fs_configuration.fs_extensions %>
+  <% if fs_extension.active %>
+  <tr>
+    <td><%= link_to 'Yes', :controller => 'fs_extension', :action => 'deactivate', :id => fs_extension %></td>
+  <% else %>
+  <tr class='inactive'>
+    <td><%= link_to 'No', :controller => 'fs_extension', :action => 'activate', :id => fs_extension %></td>
+  <% end %>
+	<td><%=h fs_extension.name %></td>
+    <td><%=h fs_extension.get_calling %></td>
+    <td><%=h fs_extension.get_called %></td>
+    <td><%= a = fs_extension.get_action
+            link_to a, :controller => 'fs_extension', :action => 'edit', :id => fs_extension %></td>
+    <td><%=h fs_extension.clir_override ? '**' : '' %></td>
+    <td><%=h fs_extension.time_limit >0 ? "#{fs_extension.time_limit}s" : '' %></td>
+        <td class="arrow">
+			<%= link_to '&uarr;', { :controller => 'fs_extension', :action => 'move_higher', :id => fs_extension }, :method => :post unless fs_extension.first? %>
+            <%= link_to "&darr;", { :controller => 'fs_extension', :action => 'move_lower', :id => fs_extension }, :method => :post unless fs_extension.last? %>
+            <%= link_to '&uArr;', { :controller => 'fs_extension', :action => 'move_to_top', :id => fs_extension }, :method => :post unless fs_extension.first? %>
+            <%= link_to '&dArr;', { :controller => 'fs_extension', :action => 'move_to_bottom', :id => fs_extension }, :method => :post unless fs_extension.last? %>
+        </td>
+    <td><%= link_to 'Delete', { :controller => 'fs_extension', :action => 'destroy', :id => fs_extension }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+  <tr>
+    <td id="footer" colspan="9"></td>
+  </tr>
+</table>

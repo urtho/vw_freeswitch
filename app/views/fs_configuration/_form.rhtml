@@ -1,0 +1,12 @@
+<!--[form:fs_configuration]-->
+
+
+<%= common_text_field 'fs_configuration', 'name', "Configuration name", 
+	    @fs_configuration.name %><%= error_for :fs_configuration, :name %>
+
+<%= common_text_field 'fs_configuration', 'description', "Description", 
+		    @fs_configuration.description, { :size => 40 } %><%= error_for :fs_configuration, :description %>
+         
+<!--[form:fs_configuration]-->
+
+

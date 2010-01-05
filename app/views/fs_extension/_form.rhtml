@@ -1,0 +1,56 @@
+<!--[form:route]-->
+<%= common_text_field 'fs_extension', 'name', "Extension name", 
+    @fs_extension.name %><%= error_for :fs_extension, :name %>
+<%= common_text_field 'fs_extension', 'description', "Description", 
+    @fs_extension.description %><%= error_for :fs_extension, :description %>
+
+<table border=0 cellspacing=0 cellpadding=0><td>
+<%= common_text_field 'fs_extension', 'called', "Called prefix", 
+    @fs_extension.called, { :desc => 'and&nbsp;' } %><%= error_for :fs_extension, :called %>
+</td><td>
+<%= common_select_tag 'fs_extension', 'called_digits',
+        @fs_extension.get_digits_options,
+        @fs_extension.called_digits %>
+</td></table>
+
+<% common_fieldset "Advanced Params", :collapsible => true, :display => 'none' do %>
+<table><td>
+<%= common_text_field 'fs_extension', 'calling', "Calling prefix", 
+    @fs_extension.calling, { :desc => 'and' } %><%= error_for :fs_extension, :calling %>
+</td><td>
+<%= common_select_tag 'fs_extension', 'calling_digits',
+        @fs_extension.get_digits_options,
+        @fs_extension.calling_digits %>
+</td></table>
+<% end %>
+<% common_fieldset "Actions", :collapsible => false do %>
+
+	<% common_fieldset "Play a prompt", :collapsible => true do %>
+		<%= common_checkbox_field 'fs_extension', 'action_prompt', 'Play prompt',
+		        @fs_extension.action_prompt %>	
+		<%= common_select_field 'fs_extension', 'fs_prompt_id', 'Prompt',
+		        @fs_extension.list_prompts.map {|x| [x.name, x.id]},
+				@fs_extension.fs_prompt %><%= error_for :fs_extension, :fs_prompt_id %>
+	<% end %>
+
+	<% common_fieldset "Bridge to ISDN", :collapsible => true do %>
+		<%= common_checkbox_field 'fs_extension', 'action_bridge', 'Do bridge',
+		        @fs_extension.action_bridge %>
+	    <table border=0 cellspacing=0 cellpadding=0><td>
+		<%= common_text_field 'fs_extension', 'remap_called', 'Bridge/Transfer to',
+		        @fs_extension.remap_called, {:desc => '&nbsp;'} %>
+		</td><td>
+			<%= common_select_tag 'fs_extension', 'fs_remap_called_type',
+			        @fs_extension.get_remap_options,
+			        @fs_extension.fs_remap_called_type %>
+		</td>
+		</table>
+		<%= common_checkbox_field 'fs_extension', 'clir_override', 'Override CLIR flag',
+		        @fs_extension.clir_override %>
+		<%= common_text_field 'fs_extension', 'time_limit', 'Bridge time limit',
+		        @fs_extension.time_limit, { :desc => 'seconds'} %>
+	<% end %>
+<% end %>
+
+<%= common_hidden_field 'fs_extension', 'fs_configuration_id', 
+    @fs_extension.fs_configuration_id %>

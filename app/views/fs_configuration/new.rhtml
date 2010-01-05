@@ -1,0 +1,24 @@
+<div id="header">
+  <ul id="primary">
+  	<li>
+  	<span>
+  		FS Configuration
+		<ul id="secondary">
+	    </ul>
+	</span>
+	</li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+	
+<% form_tag({:action => 'create'},{:id => 'fs_configuration_form', :class => 'cssform'}) do %>
+	<fieldset>
+		<legend>Creating New FreeSwitch Configuration:</legend>
+			<%= render :partial => 'form' %>
+			<%= submit_tag 'Create', :id => 'commit' %>
+	</fieldset>
+<% end %>
+
+</div>
+</div>

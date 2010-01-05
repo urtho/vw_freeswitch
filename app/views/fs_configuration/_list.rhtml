@@ -1,0 +1,39 @@
+<table id="list">
+  <tr>
+    <th>Name</th>
+    <th>Active</th>
+    <th>Commited</th>
+    <th colspan="2">Actions</th>
+  </tr>
+
+<% for fs_cfg in @fs_configurations %>
+  <tr <%= fs_cfg.active && !fs_cfg.commited ? 'class="warn"' : '' %>>
+    <td><%=h fs_cfg.name %></td>
+    <td><%=h fs_cfg.active ? 'Yes' : 'No' %></td>
+	<% if fs_cfg.commited %>
+    <td><%=h 'Yes, version: ' + fs_cfg.name + "_" + fs_cfg.version %></td>
+	<% else %>
+    <td>No</td>
+	<% end%>
+    <td><%= link_to 'Edit', :action => 'edit', :id => fs_cfg %></td>
+	<% if fs_cfg.active %>
+		<% if !fs_cfg.commited %>
+		<td><%= link_to 'Commit', { :action => 'commit', :id => fs_cfg }, :confirm => 'Are you sure?', :method => :post %>
+		<% else %>
+		<td></td>
+		<% end%>
+	<% else %>
+	<td><%= link_to 'Activate', { :action => 'activate', :id => fs_cfg }, :confirm => 'Are you sure?', :method => :post %>
+	<% end %>
+	</td>
+  </tr>
+<% end %>
+  <tr>
+    <td id="footer" colspan="6"><%= paginating_links(@fs_configurations) %></td>
+  </tr>
+</table>
+
+<%= update_page_tag do |page| 
+  page[:errorExplanation].replace error_explanation
+  page[:noticeExplanation].replace notice_explanation
+end %>

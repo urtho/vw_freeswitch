@@ -1,0 +1,8 @@
+xml.instruct!
+xml.include do
+  @fs_configurations.each do |c|
+    c.fs_extensions.all(:conditions => ["active"]).each do |e| 
+      e.to_xml(:builder => xml)
+    end
+  end
+end

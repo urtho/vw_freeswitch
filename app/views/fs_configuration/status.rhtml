@@ -1,0 +1,51 @@
+<div id="header">
+  <ul id="primary">
+	<li><%= link_to 'FS Configuration', :action => 'list' %></li>
+  	<li>
+  	<span>
+  		Status
+		<ul id="secondary">
+	  	  <li><%= link_to 'Refresh', :action => 'status' %></li>
+	  	  <li><%= link_to 'Clear counters', :action => 'clear_hits' %></li>
+	    </ul>
+	</span>
+	</li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+
+<h1>Active FreeSwitch Configuration Status </h1>
+<table><tr><td>
+<table id='list'>
+	<tr>
+		<th colspan=2>Configuration</td>
+	</tr>
+	<tr><td>Committed</td><td class='status_<%= @fs_configuration.commited ? 'up' : 'alarm' %>'><%= @fs_configuration.commited ? "Yes" : "No" %></td></tr>			
+	<tr><td>Last version</td><td><%= @fs_configuration.get_version %></td></tr>			
+</table>			
+</td><td>
+<table id='list'>
+	<tr>
+		<th colspan=2>FreeSwitch: <%= @fs_status_primary['host'] %></td>
+	</tr>
+	<tr>
+		<td>FS version</td>
+		<td class='status_<%= @fs_status_primary['version_err'] ? 'down' : 'up'%>'><%= @fs_status_primary['version'] %></td>
+	</tr>			
+	<tr>
+		<td>Dialplan version</td>
+		<td class='status_<%= @fs_status_primary['dialplan_err'] ? 'down' : 'up'%>'><%= @fs_status_primary['dialplan'] %></td>
+	</tr>			
+</table>			
+</td></tr></table>
+
+<h1>Extension hits</h1>
+<table id='list'>
+	<tr><th>Extension</th><th>Hits</th><th>ASR</th></tr>
+	<% @fs_ext_hits.each do |v| %>
+		<tr><td><%=v['name']%></td><td><%=v['hits']%></td><td class='status_<%=v['status']%>'><%=v['asr']%></td></t></tr>
+	<% end %>
+</table>
+</div>
+</div>

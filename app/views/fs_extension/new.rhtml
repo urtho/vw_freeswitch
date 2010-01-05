@@ -1,0 +1,27 @@
+<div id="header">
+  <ul id="primary">
+  	<li>
+  	<span>
+  		Configuration
+		<ul id="secondary">
+	    </ul>
+	</span>
+	</li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+	
+<% form_tag({:action => 'create'},{:class => 'cssform'}) do %>
+<fieldset>
+    <legend><%= link_to @fs_extension.fs_configuration.name, :controller => 'fs_configuration', :action => 'edit', :id => @fs_extension.fs_configuration %></legend>
+	<fieldset>
+		<legend>Creating New Extension:</legend>
+			<%= render :partial => 'form' %>
+			<%= submit_tag 'Create' %>
+	</fieldset>
+</fieldset>
+<% end %>
+
+</div>
+</div>

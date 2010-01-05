@@ -1,0 +1,36 @@
+<div id="header">
+  <ul id="primary">
+  	<li>
+  	<span>
+  		FS Configuration
+		<ul id="secondary">
+		  <li><%= link_to 'List', :action => 'list' %></li>
+	    </ul>
+	</span>
+	</li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+
+<fieldset>
+    <legend>Editing FreeSwitch Configuration:</legend>	
+    <% form_tag({:action => 'update', :id => @fs_configuration},{:id => 'fs_configuration_form', :class => 'cssform'}) do %>
+	    <%= render :partial => 'form' %>
+        <%= submit_tag 'Save', :id => 'commit' %>
+		<%= link_to 'Clone', { :action => 'clone_cfg', :id => @fs_configuration }, :confirm => 'Are you sure?', :method => :post %>
+		<% if !@fs_configuration.active %>
+		<%= link_to 'Delete', { :action => 'destroy', :id => @fs_configuration }, :confirm => 'Are you sure?', :method => :post %>
+		<% end %>
+	<% end %>
+</fieldset>
+<fieldset>
+    <legend>Editing Extensions:</legend>	
+    <ul id="table_header">
+      <li><%= link_to 'Create New Extension', :action => 'new', :controller => "fs_extension", :fs_configuration_id => @fs_configuration %></li>
+    </ul>
+    <br>
+    <%= render :partial => '/fs_extension/fs_extensions' %>
+</fieldset>
+</div>
+</div>

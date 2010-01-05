@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Web Configuration Tool</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Content-Language" content="en">
+<%= javascript_include_tag  :defaults %>
+<%= stylesheet_link_tag 'style' %>
+<%= stylesheet_link_tag 'yui-tabview.css' %>
+<%= javascript_include_tag 'yui-yahoo-dom-event.js' %>
+<%= javascript_include_tag 'yui-element-beta-min.js' %>
+<%= javascript_include_tag 'yui-tabview-min.js' %>
+<%= javascript_include_tag 'combobox/comboBox.js' %>
+</head>
+
+<body class="yui-skin-sam">
+<%= javascript_include_tag  'wz_tooltip' %>
+<div id="navBar">
+  <%= render :partial => 'layouts/global_menu' %>
+</div>
+<div id="level0">
+  <div id="level1">
+    <div id="loadingBar">
+      <div id="loading_indicator" style="display:none">
+      <%= image_tag 'loader.gif' %>
+      Loading...
+      </div>
+    </div>
+    <div id="logoBar"><%= image_tag 'logo_section.jpg', :width => '100%' %>
+    <div id="poweredBar">
+	  Powered by Telcobridges
+	</div>
+	<div id="versionBar">
+	  Version: <%= ActiveRecord::Acts::Telcobridges.version %>
+	</div>
+	</div>
+    
+    <div id="mainPage">
+      <%= error_explanation %>
+	  <%= notice_explanation %>
+	  
+	  <%= @content_for_layout %>
+	</div>
+  </div>
+</div>
+</body>
+</html>

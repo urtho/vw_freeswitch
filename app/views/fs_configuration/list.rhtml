@@ -1,0 +1,24 @@
+<div id="header">
+  <ul id="primary">
+  	<li>
+  	<span>
+  		FS Configuration
+		<ul id="secondary">
+	  	  <li><%= link_to 'Create New FS Configuration', :action => 'new' %></li>
+	    </ul>
+	</span>
+	</li>
+	<li><%= link_to 'Status', :action => 'status' %></li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+
+<h1>FreeSwitch Configuration List</h1>
+
+<div id='fs_configurations_list'>
+    <%= render :partial => 'list' %>
+</div>
+
+</div>
+</div>
