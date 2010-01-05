@@ -1,4 +1,3 @@
-<%= common_file_field 'fs_prompt', 'filename', 'File' %>
-<%= common_checkbox_field 'fs_prompt', 'active', 'Active', @fs_prompt.active %>
-<%= common_text_field 'fs_prompt', 'name', 'Name', @fs_prompt.name %>
+<%= error_for :fs_prompt, :length %><%= common_file_field 'fs_prompt', 'file', 'File' %>
+<%= error_for :fs_prompt, :name %><%= common_text_field 'fs_prompt', 'name', 'Name', @fs_prompt.name %>
 <%= common_text_field 'fs_prompt', 'description', 'Description', @fs_prompt.description %>

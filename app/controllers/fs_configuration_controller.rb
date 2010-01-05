@@ -31,11 +31,21 @@ class FsConfigurationController < ApplicationController
       redirect_to :action => 'edit', :id => @fs_configuration
     end
     rescue
-      @fs_configuration.application_cfg = @application_cfg
-      
       flash[:error] = "FreeSwitch configuration creation failed: #{$!}"
       render :action => 'new'
     end
+  end
+  
+  def activate
+    a = FsConfiguration.first(:conditions => ['active'])
+    a.active = 0
+    @fs_configuration.active = 1
+    a.transaction do
+      a.save!
+      @fs_configuration.save!
+    end
+    redirect_to :action => 'list'
+    #@fs_configuration.commit
   end
 
   def edit

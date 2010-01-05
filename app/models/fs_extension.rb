@@ -2,6 +2,8 @@ class FsExtension < ActiveRecord::Base
   belongs_to :fs_configuration
   belongs_to :fs_prompt
   
+  validates_presence_of :name, :message => 'Please supply a name for the extension'
+  
 #  validate_fields self
 
   acts_as_list :scope => :fs_configuration

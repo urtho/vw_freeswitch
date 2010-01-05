@@ -4,7 +4,9 @@ require 'memcached'
 
 class FsConfiguration < ActiveRecord::Base
   has_many :fs_extensions, :order => 'position', :dependent => :delete_all
-   
+
+  validates_presence_of :name, :message => 'Please supply a name for the extension'
+
   def get_ext_hits(host)
    ha = []
    begin

@@ -3,7 +3,7 @@
     <li>
     <span>
       New Prompt
-      <ul id="secondary"> </ul>
+      <ul id="secondary"><li><%= link_to 'List', :action => 'index' %></li></ul>
     </span>
     </li>
   </ul>
@@ -13,7 +13,7 @@
 
 <% form_tag({:action => 'create'},{:class => 'cssform', :multipart => true}) do %>
   <fieldset>
-    <legend>Importing 16bit 8kHz Wav File:</legend>
+    <legend>Importing 16bit 8kHz mono WAV File:</legend>
     <%= render :partial => 'import_form' %>
 	<%= submit_tag 'Import' %>
   </fieldset>

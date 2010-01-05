@@ -1,8 +1,10 @@
 class FsPromptsController < ApplicationController
 
   layout "telcobridges"
-  # GET /fs_prompts
-  # GET /fs_prompts.xml
+
+  verify :method => :post, :only => [ :destroy, :create, :update ],
+         :redirect_to => { :action => :list }
+         
   def index
     @fs_prompts = FsPrompt.find(:all)
 
@@ -12,8 +14,6 @@ class FsPromptsController < ApplicationController
     end
   end
 
-  # GET /fs_prompts/1
-  # GET /fs_prompts/1.xml
   def show
     @fs_prompt = FsPrompt.find(params[:id])
 
@@ -23,8 +23,6 @@ class FsPromptsController < ApplicationController
     end
   end
 
-  # GET /fs_prompts/new
-  # GET /fs_prompts/new.xml
   def new
     @fs_prompt = FsPrompt.new
 
@@ -34,20 +32,17 @@ class FsPromptsController < ApplicationController
     end
   end
 
-  # GET /fs_prompts/1/edit
   def edit
     @fs_prompt = FsPrompt.find(params[:id])
   end
 
-  # POST /fs_prompts
-  # POST /fs_prompts.xml
   def create
     @fs_prompt = FsPrompt.new(params[:fs_prompt])
 
     respond_to do |format|
       if @fs_prompt.save
         flash[:notice] = 'FsPrompt was successfully created.'
-        format.html { redirect_to(fs_prompts_url) }
+        format.html { redirect_to :action => 'index' }
         format.xml  { render :xml => @fs_prompt, :status => :created, :location => @fs_prompt }
       else
         format.html { render :action => "new" }
@@ -56,15 +51,13 @@ class FsPromptsController < ApplicationController
     end
   end
 
-  # PUT /fs_prompts/1
-  # PUT /fs_prompts/1.xml
   def update
     @fs_prompt = FsPrompt.find(params[:id])
 
     respond_to do |format|
       if @fs_prompt.update_attributes(params[:fs_prompt])
         flash[:notice] = 'FsPrompt was successfully updated.'
-        format.html { redirect_to(@fs_prompt) }
+        format.html { redirect_to :action => "index" }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,19 +66,17 @@ class FsPromptsController < ApplicationController
     end
   end
 
-  # DELETE /fs_prompts/1
-  # DELETE /fs_prompts/1.xml
   def destroy
     @fs_prompt = FsPrompt.find(params[:id])
    
     respond_to do |format| 
       if @fs_prompt.destroy
         flash[:notice] = 'Prompt deleted'
-        format.html { redirect_to(fs_prompts_url) }
+        format.html { redirect_to :action => 'index' }
         format.xml  { head :ok }
       else
         flash[:error] = 'Prompt could not be deleted, ' + ActiveRecord::Base.dependent_restrict_error
-        format.html { redirect_to(fs_prompts_url) }
+        format.html { redirect_to :action => 'index' }
         format.xml  { render :xml => @fs_prompt.errors, :status => :unprocessable_entity}
       end
     end

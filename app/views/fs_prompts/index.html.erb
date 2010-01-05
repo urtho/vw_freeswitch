@@ -4,7 +4,7 @@
   	<span>
   		Prompts List
 		<ul id="secondary">
-	  	  <li><%= link_to 'Create New prompt', new_fs_prompt_path %></li>
+	  	  <li><%= link_to 'Create New prompt', :action => 'new' %></li>
 	    </ul>
 	</span>
 	</li>
@@ -22,8 +22,8 @@
 
 <% for fs_prompt in @fs_prompts %>
   <tr>
-    <td><%= link_to 'Edit', edit_fs_prompt_path(fs_prompt) %></td>
-    <td><%= link_to 'Destroy', fs_prompt, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Edit', { :action => 'edit', :id => fs_prompt } %></td>
+    <td><%= link_to 'Destroy', {:action => 'destroy',  :id => fs_prompt }, :confirm => 'Are you sure?', :method => :post %></td>
 	<td><%=fs_prompt.name%></td>
 	<td><%=fs_prompt.length%>s</td>
 	<td><%=fs_prompt.filename%></td>

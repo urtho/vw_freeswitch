@@ -1,4 +1,3 @@
 <%= common_text_field 'fs_prompt', 'filename', 'File', @fs_prompt.filename, :readonly => "true" %>
-<%= common_checkbox_field 'fs_prompt', 'active', 'Active', @fs_prompt.active %>
-<%= common_text_field 'fs_prompt', 'name', 'Name', @fs_prompt.name %>
+<%= error_for :fs_prompt, :name %><%= common_text_field 'fs_prompt', 'name', 'Name', @fs_prompt.name %>
 <%= common_text_field 'fs_prompt', 'description', 'Description', @fs_prompt.description %>
