@@ -1,0 +1,12 @@
+<h1>Editing fs_prompt</h1>
+
+<% form_for(@fs_prompt) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @fs_prompt %> |
+<%= link_to 'Back', fs_prompts_path %>
