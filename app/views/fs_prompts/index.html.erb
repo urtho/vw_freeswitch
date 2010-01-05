@@ -17,16 +17,17 @@
 
 <table id="list">
   <tr>
-	<th>Name</th><th>file</th><th>Length</th><th colspan=2>Actions</th>
+	<th colspan=2>Actions</th><th>Name</th><th>Length</th><th>File</th><th>Description</th>
   </tr>
 
 <% for fs_prompt in @fs_prompts %>
   <tr>
-	<td><%=fs_prompt.name%></td>
-	<td><%=fs_prompt.filename%></td>
-	<td><%=fs_prompt.length%></td>
     <td><%= link_to 'Edit', edit_fs_prompt_path(fs_prompt) %></td>
     <td><%= link_to 'Destroy', fs_prompt, :confirm => 'Are you sure?', :method => :delete %></td>
+	<td><%=fs_prompt.name%></td>
+	<td><%=fs_prompt.length%>s</td>
+	<td><%=fs_prompt.filename%></td>
+	<td><%=fs_prompt.description%></td>
   </tr>
 <% end %>
 </table>

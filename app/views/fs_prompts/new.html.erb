@@ -1,11 +1,24 @@
-<h1>New fs_prompt</h1>
+<div id="header">
+  <ul id="primary">
+    <li>
+    <span>
+      New Prompt
+      <ul id="secondary"> </ul>
+    </span>
+    </li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
 
-<% form_for(@fs_prompt) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+<% form_tag({:action => 'create'},{:class => 'cssform', :multipart => true}) do %>
+  <fieldset>
+    <legend>Importing 16bit 8kHz Wav File:</legend>
+    <%= render :partial => 'import_form' %>
+	<%= submit_tag 'Import' %>
+  </fieldset>
 <% end %>
 
-<%= link_to 'Back', fs_prompts_path %>
+</div>
+</div>
+

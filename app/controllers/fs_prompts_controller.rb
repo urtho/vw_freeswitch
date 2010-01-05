@@ -47,7 +47,7 @@ class FsPromptsController < ApplicationController
     respond_to do |format|
       if @fs_prompt.save
         flash[:notice] = 'FsPrompt was successfully created.'
-        format.html { redirect_to(@fs_prompt) }
+        format.html { redirect_to(fs_prompts_url) }
         format.xml  { render :xml => @fs_prompt, :status => :created, :location => @fs_prompt }
       else
         format.html { render :action => "new" }
@@ -77,11 +77,17 @@ class FsPromptsController < ApplicationController
   # DELETE /fs_prompts/1.xml
   def destroy
     @fs_prompt = FsPrompt.find(params[:id])
-    @fs_prompt.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(fs_prompts_url) }
-      format.xml  { head :ok }
+   
+    respond_to do |format| 
+      if @fs_prompt.destroy
+        flash[:notice] = 'Prompt deleted'
+        format.html { redirect_to(fs_prompts_url) }
+        format.xml  { head :ok }
+      else
+        flash[:error] = 'Prompt could not be deleted, ' + ActiveRecord::Base.dependent_restrict_error
+        format.html { redirect_to(fs_prompts_url) }
+        format.xml  { render :xml => @fs_prompt.errors, :status => :unprocessable_entity}
+      end
     end
   end
 end

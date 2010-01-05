@@ -1,12 +1,25 @@
-<h1>Editing fs_prompt</h1>
-
-<% form_for(@fs_prompt) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+<div id="header">
+  <ul id="primary">
+    <li>
+    <span>
+      Prompt Details
+      <ul id="secondary"> 
+	</ul>
+    </span>
+    </li>
+  </ul>
+</div>
+<div id="main">
+<div id="contents">
+	
+<% form_tag({:action => 'update', :id => @fs_prompt},{:class => 'cssform'}) do %>
+  <fieldset>
+    <legend>Editing Prompt:</legend>
+    <%= render :partial => 'form' %>
+    <%= submit_tag 'Save' %>
+  </fieldset>
 <% end %>
 
-<%= link_to 'Show', @fs_prompt %> |
-<%= link_to 'Back', fs_prompts_path %>
+</div>
+</div>
+
