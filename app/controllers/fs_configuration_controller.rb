@@ -44,7 +44,7 @@ class FsConfigurationController < ApplicationController
       a.save!
       @fs_configuration.save!
     end
-    redirect_to :action => 'list'
+      redirect_to :action => 'list'
     #@fs_configuration.commit
   end
 
@@ -54,13 +54,6 @@ class FsConfigurationController < ApplicationController
   def help
   end
   
-  def dialplan
-    @fs_configurations = FsConfiguration.all(:conditions => ['active'])
-    respond_to do |type|
-      type.xml { render :action => "dialplan.rxml", :layout => false}
-    end
-  end
-
   def update
     begin
     @fs_configuration.transaction do
