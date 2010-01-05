@@ -4,9 +4,10 @@ class FsExtensionController < ApplicationController
   before_filter :find_db_obj, :except => [ :new, :create ]
 
   layout "telcobridges"
- 
+  
   verify :method => :post, :only => [ :destroy, :create, :update ],
          :redirect_to => { :action => :list }
+
 
 #  def index
 #    list   

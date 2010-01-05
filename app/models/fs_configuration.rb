@@ -55,6 +55,27 @@ class FsConfiguration < ActiveRecord::Base
     r
   end
   
+  def activate
+    a = FsConfiguration.first(:conditions => ['active'])
+    a.active = 0
+    a.commited = 0
+    self.active = 1
+    self.commited = 0
+    a.transaction do
+      a.save!
+      save!
+    end
+    docommit
+  end
+  
+  def docommit
+    self.commited = 1
+    self.version = self.version + 1
+    self.save!
+    fs = FsAPI.new('localhost')
+    fs.provision
+  end
+  
   def get_version
     [name, version].join('_')
   end

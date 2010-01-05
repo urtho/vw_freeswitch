@@ -25,6 +25,10 @@ class FsAPI
     return {'result' => result, 'errno' => nil, 'errmsg' => nil}
   end
   
+  def provision
+    invoke('bg_system','/usr/local/freeswitch/conf/dialplan/provision.sh')
+  end
+  
   def get_dialplan_version
     invoke('eval','${dialplan_version}')
   end

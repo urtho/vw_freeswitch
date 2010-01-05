@@ -36,16 +36,14 @@ class FsConfigurationController < ApplicationController
     end
   end
   
+  def commit
+    @fs_configuration.docommit
+    redirect_to :action => 'status'
+  end
+  
   def activate
-    a = FsConfiguration.first(:conditions => ['active'])
-    a.active = 0
-    @fs_configuration.active = 1
-    a.transaction do
-      a.save!
-      @fs_configuration.save!
-    end
-      redirect_to :action => 'list'
-    #@fs_configuration.commit
+    @fs_configuration.activate
+    redirect_to :action => 'status'
   end
 
   def edit
@@ -57,6 +55,7 @@ class FsConfigurationController < ApplicationController
   def update
     begin
     @fs_configuration.transaction do
+      @fs_configuration.commited = 0
       @fs_configuration.update_attributes!(params[:fs_configuration])    
       flash[:notice] = 'FreeSwitch configuration was successfully updated.'
       redirect_to :action => 'list'

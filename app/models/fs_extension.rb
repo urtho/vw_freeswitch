@@ -3,17 +3,19 @@ class FsExtension < ActiveRecord::Base
   belongs_to :fs_prompt
   
   validates_presence_of :name, :message => 'Please supply a name for the extension'
-  
-#  validate_fields self
-
+    
   acts_as_list :scope => :fs_configuration
   
   @@NullPrompt = FsPrompt.new(:name => 'NONE')
   @@NullPrompt.id = 0
   @@NullPrompt.readonly!
-  
+    
   def NullPrompt
     @@NullPrompt
+  end
+  
+  def after_save 
+    fs_configuration.update_attributes!({ :commited => 0}) unless self.fs_configuration.nil? 
   end
   
   def get_calling
@@ -135,28 +137,28 @@ class FsExtension < ActiveRecord::Base
     options[:skip_instruct] ||= true
     xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
-    xml.extension('name' => name) do
-      xml.condition('field' => 'caller_id_number', 'expression' => get_calling_pattern) unless calling.blank?
-      xml.condition('field' => 'destination_number', 'expression' => get_called_pattern) do
-        xml.action('data' => 'no', 'application' => 'privacy') if clir_override
-        xml.action('data' => "+#{time_limit}", 'application' => 'sched_hangup') if time_limit > 0
-        xml.action('data' => 'bypass_media=true', 'application' => 'set')
+    xml.extension(:name => name) do
+      xml.condition(:field => 'caller_id_number', :expression => get_calling_pattern) unless calling.blank?
+      xml.condition(:field => 'destination_number', :expression => get_called_pattern) do
+        xml.action(:data => 'no', :application => 'privacy') if clir_override
+        xml.action(:data => "+#{time_limit}", :application => 'sched_hangup') if time_limit > 0
+        xml.action(:data => 'bypass_media=true', :application => 'set')
         hit = "hit_" + CGI::escape(name)
-        xml.action('data' => "hits=${memcache(increment #{hit})}", 'application' => 'set')
+        xml.action(:data => "hits=${memcache(increment #{hit})}", :application => 'set')
         if action_prompt
-          xml.action('application' => 'answer') if answer
-          xml.action('application' => 'playack', 'data' => "/usr/local/freeswitch/sounds/pc/#{fs_prompt.filename}") 
+          xml.action(:application => 'answer') if answer
+          xml.action(:application => 'playack', :data => "/usr/local/freeswitch/sounds/pc/#{fs_prompt.filename}") 
         end
         if action_bridge
-          xml.action('application' => "export", 'data' => "nolocal:api_on_answer=memcache increment a#{hit}")
+          xml.action(:application => "export", :data => "nolocal:api_on_answer=memcache increment a#{hit}")
           if fs_remap_called_type == 3
-            xml.action('data' => remap_called, 'application' => 'transfer') 
+            xml.action(:data => remap_called, :application => 'transfer') 
           else  
-            xml.action('data' => 'bypass_media_after_bridge=true', 'application' => 'set') if action_prompt
-            xml.action('data' => "sofia/gateway/${sofia_profile_name}/" + get_remap_pattern, 'application' => 'bridge')
+            xml.action(:data => 'bypass_media_after_bridge=true', :application => 'set') if action_prompt
+            xml.action(:data => "sofia/gateway/${sofia_profile_name}/" + get_remap_pattern, :application => 'bridge')
           end
         end
-        xml.action('application' => 'hangup')
+        xml.action(:application => 'hangup')
       end
     end
   end

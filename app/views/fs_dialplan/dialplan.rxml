@@ -1,8 +1,8 @@
+c = @fs_configuration
 xml.instruct!
-xml.include do
-  @fs_configurations.each do |c|
-    c.fs_extensions.all(:conditions => ["active"]).each do |e| 
-      e.to_xml(:builder => xml)
-    end
+xml.include do |x|
+  x << "  <X-PRE-PROCESS cmd=\"set\" data=\"dialplan_version=#{c.get_version}\"/>\n"
+  c.fs_extensions.all(:conditions => ["active"]).each do |e| 
+    e.to_xml(:builder => xml)
   end
 end

@@ -11,7 +11,7 @@
     <td><%=h fs_cfg.name %></td>
     <td><%=h fs_cfg.active ? 'Yes' : 'No' %></td>
 	<% if fs_cfg.commited %>
-    <td><%=h 'Yes, version: ' + fs_cfg.name + "_" + fs_cfg.version %></td>
+    <td><%=h 'Yes, version: ' + fs_cfg.get_version %></td>
 	<% else %>
     <td>No</td>
 	<% end%>
