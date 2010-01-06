@@ -8,7 +8,7 @@ class FsDialplanController < ApplicationController
   end
    
   def dialplan
-     @fs_configuration = FsConfiguration.first(:conditions => ['active'])
+     @fs_configuration = FsConfiguration.find(:first, :conditions => ['active'])
   end
     
 end

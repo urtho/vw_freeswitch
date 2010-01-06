@@ -11,7 +11,7 @@ class FsConfiguration < ActiveRecord::Base
    ha = []
    begin
      cache = Memcached.new(host)
-     okeys = fs_extensions.all(:conditions => ["active"], :select => "DISTINCT name").map { |ext| CGI::escape(ext.name) }
+     okeys = fs_extensions.find(:all, :conditions => ["active"], :select => "DISTINCT name").map { |ext| CGI::escape(ext.name) }
      hat = cache.get( okeys.map { |ext| "hit_" + ext }, false)
      ahat= cache.get( okeys.map { |ext| "ahit_" + ext }, false)
      ha = hat.map do |k,v| 
@@ -32,7 +32,7 @@ class FsConfiguration < ActiveRecord::Base
  
   def clear_ext_hits(host)
     cache = Memcached.new(host)
-    fs_extensions.all(:conditions => ["active"], :select => "DISTINCT name").map do |ext| 
+    fs_extensions.find(:all, :conditions => ["active"], :select => "DISTINCT name").map do |ext| 
       begin
         name = CGI::escape(ext.name)
         cache.delete("hit_" + name)
@@ -56,7 +56,7 @@ class FsConfiguration < ActiveRecord::Base
   end
   
   def activate
-    a = FsConfiguration.first(:conditions => ['active'])
+    a = FsConfiguration.find(:first, :conditions => ['active'])
     a.active = 0
     a.commited = 0
     self.active = 1
