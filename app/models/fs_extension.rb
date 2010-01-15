@@ -3,6 +3,9 @@ class FsExtension < ActiveRecord::Base
   belongs_to :fs_prompt
   
   validates_presence_of :name, :message => 'Please supply a name for the extension'
+  validates_numericality_of :called, :unless => Proc.new { |ext| ext.called.blank? }
+  validates_numericality_of :calling, :unless => Proc.new { |ext| ext.calling.blank? }
+  validates_numericality_of :remap_called, :unless => Proc.new { |ext| ext.remap_called.blank? || ext.fs_remap_called_type == 3}
     
   acts_as_list :scope => :fs_configuration
   
@@ -39,7 +42,7 @@ class FsExtension < ActiveRecord::Base
       if digits.blank? or digits < 0
         _prefix = "starts with #{prefix}*"
       elsif digits == 0
-        _prefix = "is #{prefix} exactly"
+        _prefix = prefix
       else
         _prefix = "starts with #{prefix}" + "X" * digits 
       end     
@@ -53,7 +56,8 @@ class FsExtension < ActiveRecord::Base
       action << (answer ? "answer and play '#{fs_prompt.name}' prompt" : "play precall '#{fs_prompt.name}' announcement")
     end
     if action_bridge 
-      if clir_override then clir = ' with CLIR override' else clir = '' end
+      clir = ''
+#      if clir_override then clir = ' with CLIR override' else clir = '' end
       dest = remap_called 
       if fs_remap_called_type == 2 
         if called_digits == -1
@@ -75,11 +79,12 @@ class FsExtension < ActiveRecord::Base
       if fs_remap_called_type == 3
         action << "transfer to #{dest} service #{clir}" 
       else
-        time_limit > 0 ? action << "call [#{time_limit}s] #{dest}#{clir}" : action << "call #{dest}#{clir}" 
+        #time_limit > 0 ? action << "call [#{time_limit}s] #{dest}#{clir}" : 
+        action << "call #{dest}#{clir}" 
       end 
     end
     if action.empty?
-      action << 'hangup'
+      action << 'release'
     end
     action.to_sentence
   end

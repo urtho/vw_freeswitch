@@ -25,9 +25,9 @@
 	<% end %>
 </fieldset>
 <fieldset>
-    <legend>Editing Extensions:</legend>	
+    <legend>Editing routing entries:</legend>	
     <ul id="table_header">
-      <li><%= link_to 'Create New Extension', :action => 'new', :controller => "fs_extension", :fs_configuration_id => @fs_configuration %></li>
+      <li><%= link_to 'Create New Routing', :action => 'new', :controller => "fs_extension", :fs_configuration_id => @fs_configuration %></li>
     </ul>
     <br>
     <%= render :partial => '/fs_extension/fs_extensions' %>
